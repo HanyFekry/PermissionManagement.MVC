@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +33,17 @@ namespace PermissionManagement.MVC
                     .AddDefaultUI()
             .AddDefaultTokenProviders();
             services.AddControllersWithViews();
+
+            ////Added by Hany 4 test
+            //services.AddAuthorization(o =>
+            //{
+            //    o.AddPolicy("test", b =>
+            //    {
+            //        //all requirements for one policy must be fulfilled.
+            //        b.Requirements.Add(new PermissionRequirement(""));
+            //        b.Requirements.Add(new RolesAuthorizationRequirement(new List<string> { "Admin" }));
+            //    });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

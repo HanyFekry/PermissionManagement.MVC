@@ -1,21 +1,46 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService
 @using PermissionManagement.MVC.Constants
-<h1>Product Management</h1>
-<br />
-@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Create)).Result.Succeeded)
-{
-    <button class="btn btn-success">Create</button>
-}
-@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.View)).Result.Succeeded)
-{
-    <button class="btn btn-info">View</button>
-}
-@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Edit)).Result.Succeeded)
-{
-    <button class="btn btn-warning">Modify</button>
-}
-@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Delete)).Result.Succeeded)
-{
-    <button class="btn btn-danger">Delete</button>
-}
+@model IEnumerable<PermissionManagement.MVC.Entities.Product>
+
+
+<div class="row">
+    <div class="col-md-6"> <h4>Product Management</h4></div>
+    <div class="col-md-6">
+        @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Create)).Result.Succeeded)
+        {
+            <button class="btn btn-success">Create</button>
+        }
+    </div>
+    <br />
+
+    <table class="table table-striped">
+        <thead>
+        <th>Name</th>
+        <th>Price</th>
+        <th></th></thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>
+                        @*@if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.View)).Result.Succeeded)
+                            {
+                                <button class="btn btn-info">View</button>
+                            }*@
+                        @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Edit)).Result.Succeeded)
+                        {
+                            <button class="btn btn-warning">Modify</button>
+                        }
+                        @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Delete)).Result.Succeeded)
+                        {
+                            <button class="btn btn-danger">Delete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
